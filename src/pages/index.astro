@@ -1,0 +1,82 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import config from "../../indexConfig.json";
+const blogs = await getCollection("blogs");
+---
+
+<Base title="主页">
+  <main
+    class="gap-8 font-sans mt-[20dvh] mx-8 flex flex-col lg:flex-row text-wrap"
+  >
+    <div class="flex gap-4 flex-col">
+      <h1 class="text-7xl">Pizero</h1>
+      <div class="flex flex-col gap-2">
+        <p>摸鱼摆烂乐子人，技校在读学生，会点前端/后端开发，偶尔写写代码。</p>
+        <p>
+          自主起的项目基本上没有，全是玩具，用的都是轮椅，喜欢 KISS
+          和写一次性代码，突出一个能用就行。
+        </p>
+        <p>
+          学业上基本上就是混子，上课摸鱼摆烂，能多拿一分就一分，拿不到开摆。
+        </p>
+        <p>
+          这个网名基本上就是一个随机数随机出来的，只要能确保指向的是我，怎么叫都行。
+        </p>
+      </div>
+      <div
+        class={[
+          "flex",
+          "gap-2",
+          "bg-stone-200",
+          "dark:bg-stone-800",
+          "p-2",
+          "rounded-full",
+        ].join(" ")}
+      >
+        {
+          config.links.map((i) => (
+            <a
+              href={i.link}
+              class="px-2 rounded-full hover:bg-stone-100 dark:hover:bg-stone-700 transition duration-100"
+            >
+              {i.name}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+    <div class="flex flex-col gap-4 grow">
+      <h2 class="text-5xl">博客</h2>
+      <div class="flex flec-col gap-2 w-full">
+        {
+          blogs.reverse().map((post) => (
+            <a href={`/blogs/${post.id}`} class="block w-full">
+              <article class="flex flex-col gap-2 p-2 rounded-lg bg-stone-200 dark:bg-stone-800 hover:bg-stone-100 dark:hover:bg-stone-700 transition duration-100">
+                <div class="text-3xl">{post.data.title}</div>
+                <div class="flex gap-2">
+                  <div class="flex gap-2">
+                    {post.data.tags.map((tag) => (
+                      <div class="px-2 rounded-md bg-sky-300 dark:bg-sky-800">
+                        {tag}
+                      </div>
+                    ))}
+                  </div>
+                  <time datetime={post.data.date.toISOString()}>
+                    {`${post.data.date.getFullYear()}/${post.data.date.getMonth() + 1}/${post.data.date.getDate()}`}
+                    {
+                      ["周日", "周一", "周二", "周三", "周四", "周五", "周六"][
+                        post.data.date.getDay()
+                      ]
+                    }
+                  </time>
+                </div>
+                <p>{post.data.description}</p>
+              </article>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </main>
+</Base>
