@@ -3,7 +3,7 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
-  keywords?: string;
+  keywords?: string[];
 }
 const props = Astro.props;
 ---
@@ -12,14 +12,21 @@ const props = Astro.props;
 <html lang="zh-Hans">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="author" content="pizero" />
+    <meta name="color-scheme" content="dark light" />
     {props.title && <title>{props.title}</title>}
     {
       props.description && (
         <meta name="description" content={props.description} />
       )
     }
-    {props.keywords && <meta name="keywords" content={props.keywords} />}
+    {
+      props.keywords && (
+        <meta name="keywords" content={props.keywords.join(",")} />
+      )
+    }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body><slot /></body>
 </html>

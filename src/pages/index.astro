@@ -5,7 +5,11 @@ import config from "../../indexConfig.json";
 const blogs = await getCollection("blogs");
 ---
 
-<Base title="主页">
+<Base
+  title="主页"
+  description="Pizero 的个人博客"
+  keywords={["blog", "pizero", "博客"]}
+>
   <main
     class="gap-8 font-sans mt-[20dvh] mx-8 flex flex-col lg:flex-row text-wrap"
   >

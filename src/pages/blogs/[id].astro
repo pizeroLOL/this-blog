@@ -1,5 +1,10 @@
 ---
-import { getCollection, render } from "astro:content";
+import {
+  getCollection,
+  render,
+  type InferEntrySchema,
+  type RenderedContent,
+} from "astro:content";
 import Base from "../../layouts/Base.astro";
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
@@ -11,13 +16,24 @@ export async function getStaticPaths() {
 }
 // 2. For your template, you can get the entry directly from the prop
 interface Props {
-  post: any;
+  post: {
+    id: string;
+    body?: string;
+    collection: "blogs";
+    data: InferEntrySchema<"blogs">;
+    rendered?: RenderedContent;
+    filePath?: string;
+  };
 }
 const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<Base>
+<Base
+  title={post.data.title}
+  description={post.data.description}
+  keywords={post.data.tags}
+>
   <header class="mt-2 mx-auto sticky top-2 px-8 max-w-[88rem] z-50">
     <div class="flex bg-stone-200 dark:bg-stone-700 p-2 rounded-full">
       <a
