@@ -11,9 +11,9 @@ const blogs = await getCollection("blogs");
   keywords={["blog", "pizero", "博客"]}
 >
   <main
-    class="gap-8 font-sans mt-[20dvh] mx-8 flex flex-col lg:flex-row text-wrap"
+    class="gap-8 font-sans mt-[20dvh] mx-8 flex flex-col md:flex-row text-wrap mb-4"
   >
-    <div class="flex gap-4 flex-col">
+    <div class="flex gap-4 flex-col max-w-[40rem]">
       <h1 class="text-7xl">Pizero</h1>
       <div class="flex flex-col gap-2">
         <p>摸鱼摆烂乐子人，技校在读学生，会点前端/后端开发，偶尔写写代码。</p>
@@ -52,14 +52,14 @@ const blogs = await getCollection("blogs");
     </div>
     <div class="flex flex-col gap-4 grow">
       <h2 class="text-5xl">博客</h2>
-      <div class="flex flec-col gap-2 w-full">
+      <div class="flex flex-col gap-2 w-full">
         {
           blogs.reverse().map((post) => (
             <a href={`/blogs/${post.id}`} class="block w-full">
               <article class="flex flex-col gap-2 p-2 rounded-lg bg-stone-200 dark:bg-stone-800 hover:bg-stone-100 dark:hover:bg-stone-700 transition duration-100">
                 <div class="text-3xl">{post.data.title}</div>
-                <div class="flex gap-2">
-                  <div class="flex gap-2">
+                <div class="flex gap-2 flex-wrap text-nowrap">
+                  <div class="flex gap-2 flex-wrap text-nowrap">
                     {post.data.tags.map((tag) => (
                       <div class="px-2 rounded-md bg-sky-300 dark:bg-sky-800">
                         {tag}

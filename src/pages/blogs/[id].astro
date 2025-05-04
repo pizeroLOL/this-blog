@@ -34,7 +34,7 @@ const { Content } = await render(post);
   description={post.data.description}
   keywords={post.data.tags}
 >
-  <header class="mt-2 mx-auto sticky top-2 px-8 max-w-[88rem] z-50">
+  <header class="mt-2 mx-auto sticky top-2 px-8 max-w-[60rem] z-50">
     <div class="flex bg-stone-200 dark:bg-stone-700 p-2 rounded-full">
       <a
         href="/"
@@ -43,7 +43,7 @@ const { Content } = await render(post);
       >
     </div>
   </header>
-  <main class="md px-8 py-4 max-w-[88rem] mx-auto">
+  <main class="md px-8 py-4 max-w-[60rem] mx-auto">
     <h1 id={post.data.title}>{post.data.title}</h1>
     <div></div>
     <Content />

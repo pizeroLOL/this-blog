@@ -9,7 +9,7 @@ body {
 }
 
 .md h1 {
-  @apply text-6xl mt-12 mb-5;
+  @apply text-7xl mt-20 mb-5;
 }
 
 .md h2 {
@@ -33,7 +33,12 @@ body {
 }
 
 .md p {
-  @apply my-2;
+  @apply my-3;
+  line-height: 1.75em;
+}
+
+.md a {
+  @apply text-sky-800 dark:text-sky-200 underline hover:bg-sky-300 hover:dark:bg-sky-900 transition-colors duration-100;
 }
 
 .md code {
