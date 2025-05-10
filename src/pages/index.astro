@@ -1,8 +1,10 @@
 ---
 import { getCollection } from "astro:content";
-import Base from "../layouts/Base.astro";
 import config from "../../indexConfig.json";
-const blogs = await getCollection("blogs");
+import PostBlock from "../components/PostBlock.astro";
+import Base from "../layouts/Base.astro";
+
+const posts = await getCollection("blogs");
 ---
 
 <Base
@@ -54,31 +56,12 @@ const blogs = await getCollection("blogs");
       <h2 class="text-5xl">博客</h2>
       <div class="flex flex-col gap-2 w-full">
         {
-          blogs.reverse().map((post) => (
-            <a href={`/blogs/${post.id}`} class="block w-full">
-              <article class="flex flex-col gap-2 p-2 rounded-lg bg-stone-200 dark:bg-stone-800 hover:bg-stone-100 dark:hover:bg-stone-700 transition duration-100">
-                <div class="text-3xl">{post.data.title}</div>
-                <div class="flex gap-2 flex-wrap text-nowrap">
-                  <div class="flex gap-2 flex-wrap text-nowrap">
-                    {post.data.tags.map((tag) => (
-                      <div class="px-2 rounded-md bg-sky-300 dark:bg-sky-800">
-                        {tag}
-                      </div>
-                    ))}
-                  </div>
-                  <time datetime={post.data.date.toISOString()}>
-                    {`${post.data.date.getFullYear()}/${post.data.date.getMonth() + 1}/${post.data.date.getDate()}`}
-                    {
-                      ["周日", "周一", "周二", "周三", "周四", "周五", "周六"][
-                        post.data.date.getDay()
-                      ]
-                    }
-                  </time>
-                </div>
-                <p>{post.data.description}</p>
-              </article>
-            </a>
-          ))
+          (import.meta.env.DEV
+            ? posts
+            : posts.filter((post) => !post.data.tags.includes("测试"))
+          )
+            .sort((a, b) => a.data.date.getUTCDate() - b.data.date.getUTCDate())
+            .map((post) => <PostBlock post={post} />)
         }
       </div>
     </div>
