@@ -6,6 +6,7 @@ import {
   type RenderedContent,
 } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import WebInfo from "../../components/WebInfo.astro";
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
   const posts = await getCollection("blogs");
@@ -46,5 +47,7 @@ const { Content } = await render(post);
     <div></div>
     <Content />
   </main>
-  <footer></footer>
+  <footer class="m-4">
+    <WebInfo />
+  </footer>
 </Base>
