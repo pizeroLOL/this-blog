@@ -18,12 +18,14 @@ const weekdayMap = ["周日", "周一", "周二", "周三", "周四", "周五", 
   <article
     class="flex flex-col gap-2 p-2 rounded-lg bg-stone-200 dark:bg-stone-800 hover:bg-stone-100 dark:hover:bg-stone-700 transition duration-100"
   >
-    <div class="text-3xl">{post.data.title}</div>
+    <div class="text-2xl">{post.data.title}</div>
     <div class="flex gap-2 flex-wrap text-nowrap">
       <div class="flex gap-2 flex-wrap text-nowrap">
         {
           post.data.tags.map((tag) => (
-            <div class="px-2 rounded-md bg-sky-300 dark:bg-sky-800">{tag}</div>
+            <div class="px-2 rounded-md bg-sky-300/60 dark:bg-sky-800/60">
+              {tag}
+            </div>
           ))
         }
       </div>
