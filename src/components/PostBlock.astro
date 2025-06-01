@@ -1,4 +1,6 @@
 ---
+import timeFormat from "../scripts/timeFormat";
+
 type Props = {
   post: {
     id: string;
@@ -11,7 +13,6 @@ type Props = {
   };
 };
 const post = Astro.props.post;
-const weekdayMap = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
 ---
 
 <a href={`/blogs/${post.id}`} class="block w-full">
@@ -30,10 +31,7 @@ const weekdayMap = ["周日", "周一", "周二", "周三", "周四", "周五", 
         }
       </div>
       <time datetime={post.data.date.toISOString()}>
-        {post.data.date.getFullYear()}/{post.data.date.getMonth() + 1}/{
-          post.data.date.getDate()
-        }
-        {weekdayMap[post.data.date.getDay()]}
+        {timeFormat(post.data.date)}
       </time>
     </div>
     <p>{post.data.description}</p>
