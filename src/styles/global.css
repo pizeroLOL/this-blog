@@ -49,8 +49,8 @@ body {
 }
 
 .md p {
-  @apply my-3;
-  line-height: 1.75em;
+  @apply my-4;
+  line-height: 2em;
 }
 
 .md a {
