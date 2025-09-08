@@ -68,7 +68,7 @@ const posts = await getCollection("blogs");
             ? posts
             : posts.filter((post) => !post.data.tags.includes("测试"))
           )
-            .sort((a, b) => a.data.date.getUTCDate() - b.data.date.getUTCDate())
+            .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
             .map((post) => <PostBlock post={post} />)
         }
       </div>
