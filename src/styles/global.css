@@ -66,6 +66,7 @@ body {
   display: block;
   list-style-type: disc;
   padding-inline-start: 2rem;
+  @apply my-4;
 }
 
 .md ol {
@@ -97,7 +98,7 @@ body {
 }
 
 .md pre.astro-code {
-  @apply p-4 rounded-lg w-fit max-w-full mx-auto;
+  @apply p-4 rounded-lg w-full max-w-full my-4;
 }
 
 .md img,
