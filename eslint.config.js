@@ -10,6 +10,8 @@ import css from "@eslint/css";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
+  // 构建产物与自动生成的类型不做 lint（同 .gitignore）
+  { ignores: ["dist/", ".astro/"] },
   {
     files: ["**/*.{js,mjs,cjs,ts}"],
     plugins: { js },
@@ -43,6 +45,15 @@ export default defineConfig([
     plugins: { css },
     language: "css/css",
     extends: ["css/recommended"],
+    rules: {
+      // Tailwind v4 的 @apply / @theme 与 theme.css 里的 M3 令牌变量
+      // 对这套 linter 不可见，以下规则一开就是整片误报；
+      // 保留语法检查（解析失败仍会报错）即可
+      "css/no-invalid-at-rules": "off",
+      "css/no-invalid-properties": "off",
+      "css/no-important": "off",
+      "css/use-baseline": "off",
+    },
   },
   {
     files: ["**/*.md"],

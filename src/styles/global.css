@@ -1,111 +1,451 @@
+@import "@fontsource-variable/roboto-flex/standard.css";
+@import "@fontsource-variable/noto-sans-sc/wght.css";
 @import "tailwindcss";
+@import "./theme.css";
 
-:root {
-  color-scheme: dark light;
+/* ---------------------------------------------------------------------------
+ * Material 3 Expressive 设计令牌
+ * 颜色在 theme.css（SchemeExpressive 生成，随系统深浅切换）；
+ * 这里定义排版 / 形状 / 高程 / 动效。
+ * ------------------------------------------------------------------------- */
+@theme {
+  /* —— 颜色角色 —— */
+  --color-primary: var(--md-primary);
+  --color-on-primary: var(--md-on-primary);
+  --color-primary-container: var(--md-primary-container);
+  --color-on-primary-container: var(--md-on-primary-container);
+  --color-secondary: var(--md-secondary);
+  --color-on-secondary: var(--md-on-secondary);
+  --color-secondary-container: var(--md-secondary-container);
+  --color-on-secondary-container: var(--md-on-secondary-container);
+  --color-tertiary: var(--md-tertiary);
+  --color-on-tertiary: var(--md-on-tertiary);
+  --color-tertiary-container: var(--md-tertiary-container);
+  --color-on-tertiary-container: var(--md-on-tertiary-container);
+  --color-error: var(--md-error);
+  --color-on-error: var(--md-on-error);
+  --color-error-container: var(--md-error-container);
+  --color-on-error-container: var(--md-on-error-container);
+  --color-surface: var(--md-surface);
+  --color-surface-dim: var(--md-surface-dim);
+  --color-surface-bright: var(--md-surface-bright);
+  --color-surface-container-lowest: var(--md-surface-container-lowest);
+  --color-surface-container-low: var(--md-surface-container-low);
+  --color-surface-container: var(--md-surface-container);
+  --color-surface-container-high: var(--md-surface-container-high);
+  --color-surface-container-highest: var(--md-surface-container-highest);
+  --color-on-surface: var(--md-on-surface);
+  --color-on-surface-variant: var(--md-on-surface-variant);
+  --color-outline: var(--md-outline);
+  --color-outline-variant: var(--md-outline-variant);
+  --color-inverse-surface: var(--md-inverse-surface);
+  --color-inverse-on-surface: var(--md-inverse-on-surface);
+  --color-inverse-primary: var(--md-inverse-primary);
+  --color-scrim: var(--md-scrim);
+
+  /* —— 排版：Roboto Flex（拉丁）+ Noto Sans SC（中文），M3 排版角色 —— */
+  --font-sans:
+    "Roboto Flex Variable", "Noto Sans SC Variable", ui-sans-serif, system-ui,
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-mono:
+    ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Mono", Consolas,
+    "Noto Sans Mono CJK SC", monospace;
+
+  --text-display: 3.5rem; /* display —— 首屏大名 */
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.02em;
+  --text-display--font-weight: 800;
+  --text-headline: 2rem; /* headline —— 区块标题 */
+  --text-headline--line-height: 1.25;
+  --text-headline--letter-spacing: -0.015em;
+  --text-headline--font-weight: 700;
+  --text-title: 1.375rem; /* title —— 卡片标题 */
+  --text-title--line-height: 1.35;
+  --text-title--font-weight: 700;
+  --text-body: 1rem; /* body —— 正文 */
+  --text-body--line-height: 1.7;
+  --text-body--font-weight: 400;
+  --text-label: 0.875rem; /* label —— 芯片 / 按钮 / 元信息 */
+  --text-label--line-height: 1.45;
+  --text-label--font-weight: 600;
+
+  /* —— M3 形状刻度（xs 4 / sm 8 / md 12 / lg 16 / xl 24 / 2xl 28）—— */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 28px;
+  --radius-3xl: 32px;
+
+  /* —— M3 高程（阴影本身极克制，层次主要靠色调表面）—— */
+  --shadow-e1: 0 1px 2px 0 rgb(0 0 0 / 0.3), 0 1px 3px 1px rgb(0 0 0 / 0.15);
+  --shadow-e2: 0 1px 2px 0 rgb(0 0 0 / 0.3), 0 2px 6px 2px rgb(0 0 0 / 0.15);
+  --shadow-e3: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 4px 8px 3px rgb(0 0 0 / 0.15);
+
+  /* —— M3 动效：emphasized 曲线 + 2025 回弹（spring 采样为 linear()）—— */
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized-decel: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --ease-emphasized-accel: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --ease-spring: linear(
+    0,
+    0.082,
+    0.269,
+    0.489,
+    0.696,
+    0.862,
+    0.981,
+    1.053,
+    1.088,
+    1.094,
+    1.084,
+    1.065,
+    1.045,
+    1.026,
+    1.011,
+    1,
+    0.994,
+    0.991,
+    0.991,
+    0.992,
+    0.994,
+    0.996,
+    0.998
+  );
 }
 
-body {
-  @apply bg-stone-300 dark:bg-stone-900 text-stone-800 dark:text-stone-200 font-sans;
+@layer base {
+  html {
+    background-color: var(--md-surface);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface text-body text-on-surface font-sans antialiased;
+  }
+
+  /* M3 焦点环 */
+  :focus-visible {
+    outline: 3px solid var(--md-primary);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    ::before,
+    ::after {
+      animation-duration: 1ms !important;
+      animation-delay: 0ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 1ms !important;
+    }
+  }
 }
 
-.link {
-  @apply hover:text-sky-800 hover:dark:text-sky-200 bg-transparent transition-colors duration-100 ease-in;
+/* 入场动效：emphasized-decelerate 上浮 / spring 弹出 */
+@keyframes m3-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
 }
 
-.ib-link {
-  @apply text-sky-800 dark:text-sky-200 bg-transparent transition-colors duration-100 ease-in inline-block hover:bg-sky-300/60 hover:dark:bg-sky-900/60 underline;
+@keyframes m3-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
 }
 
-.inside-link {
-  @apply hover:text-yellow-800 hover:dark:text-yellow-200 bg-transparent transition-colors duration-100 ease-in;
+/* ---------------------------------------------------------------------------
+ * M3 组件姿态：形状 / 状态层 / 高程集中在这里，
+ * 布局与一次性样式留给页面里的 Tailwind 工具类。
+ * ------------------------------------------------------------------------- */
+@layer components {
+  /* ---------- 顶栏 ---------- */
+  .m3-top-bar {
+    @apply bg-surface/85 sticky top-0 z-50 backdrop-blur-md;
+  }
+
+  /* ---------- 卡片 ---------- */
+  .m3-card {
+    @apply bg-surface-container rounded-xl transition-[background-color,box-shadow,transform] duration-200 ease-emphasized;
+  }
+
+  .m3-card-interactive:hover {
+    background-color: var(--md-surface-container-high);
+    box-shadow: var(--shadow-e1);
+  }
+
+  /* ---------- 图标按钮（状态层用 color-mix 叠在内容色上）---------- */
+  .m3-icon-btn {
+    @apply text-on-surface-variant grid size-10 shrink-0 place-items-center rounded-full transition-colors duration-150 ease-emphasized;
+  }
+
+  .m3-icon-btn:hover {
+    background-color: color-mix(
+      in oklab,
+      var(--md-on-surface) 10%,
+      transparent
+    );
+  }
+
+  .m3-icon-btn:active {
+    background-color: color-mix(
+      in oklab,
+      var(--md-on-surface) 15%,
+      transparent
+    );
+  }
+
+  /* ---------- 芯片 ---------- */
+  .m3-chip {
+    @apply text-label inline-flex h-7 items-center gap-1.5 rounded-full px-3 whitespace-nowrap;
+  }
+
+  .m3-chip-tonal {
+    @apply bg-secondary-container text-on-secondary-container;
+  }
+
+  .m3-chip-outline {
+    @apply border-outline text-on-surface-variant border;
+  }
+
+  .m3-chip-link {
+    @apply transition-colors duration-150 ease-emphasized;
+  }
+
+  .m3-chip-link:hover {
+    background-color: color-mix(
+      in oklab,
+      var(--md-on-surface) 10%,
+      transparent
+    );
+  }
+
+  .m3-chip-link:active {
+    background-color: color-mix(
+      in oklab,
+      var(--md-on-surface) 15%,
+      transparent
+    );
+  }
+
+  .m3-chip-hero {
+    @apply bg-on-primary-container text-primary-container transition-transform duration-200 ease-spring;
+  }
+
+  .m3-chip-hero:active {
+    transform: scale(0.95);
+  }
+
+  /* ---------- 按钮 ---------- */
+  .m3-btn {
+    @apply text-label ease-emphasized inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 transition-all duration-200;
+  }
+
+  .m3-btn:active {
+    transform: scale(0.97);
+  }
+
+  .m3-btn-filled {
+    @apply bg-primary text-on-primary;
+  }
+
+  .m3-btn-filled:hover {
+    box-shadow: var(--shadow-e1);
+    filter: brightness(1.1);
+  }
+
+  .m3-btn-tonal {
+    @apply bg-secondary-container text-on-secondary-container;
+  }
+
+  .m3-btn-tonal:hover {
+    box-shadow: var(--shadow-e1);
+  }
+
+  .m3-btn-text {
+    @apply text-primary px-4;
+  }
+
+  .m3-btn-text:hover {
+    background-color: color-mix(in oklab, var(--md-primary) 10%, transparent);
+  }
+
+  .m3-btn-outlined {
+    @apply border-outline text-primary border;
+  }
+
+  .m3-btn-outlined:hover {
+    background-color: color-mix(in oklab, var(--md-primary) 10%, transparent);
+  }
+
+  /* ---------- 扩展 FAB（回弹曲线）---------- */
+  .m3-fab {
+    @apply bg-primary-container text-on-primary-container shadow-e2 ease-spring grid size-14 place-items-center rounded-2xl transition-[opacity,transform,box-shadow] duration-300;
+  }
+
+  .m3-fab:hover {
+    box-shadow: var(--shadow-e3);
+  }
+
+  .m3-fab:active {
+    transform: scale(0.95);
+  }
+
+  .m3-fab-hidden {
+    @apply pointer-events-none scale-75 opacity-0;
+  }
+
+  /* ---------- 入场 ---------- */
+  .m3-rise {
+    animation: m3-rise 500ms var(--ease-emphasized-decel) backwards;
+  }
+
+  .m3-pop {
+    animation: m3-pop 450ms var(--ease-spring) backwards;
+  }
+
+  /* ---------- 正文（Markdown 渲染区）---------- */
+  .md {
+    @apply text-body;
+  }
+
+  .md > :first-child {
+    @apply mt-0;
+  }
+
+  .md h1 {
+    @apply text-headline mt-12 mb-4 font-bold;
+  }
+
+  .md h2 {
+    @apply text-headline mt-12 mb-4;
+  }
+
+  .md h3 {
+    @apply text-title mt-8 mb-3;
+  }
+
+  .md h4 {
+    @apply mt-6 mb-2 text-xl font-bold;
+  }
+
+  .md h5 {
+    @apply mt-5 mb-2 text-lg font-semibold;
+  }
+
+  .md h6 {
+    @apply mt-4 mb-2 font-semibold;
+  }
+
+  .md p {
+    @apply my-4;
+    text-wrap: pretty;
+  }
+
+  .md a {
+    @apply text-primary decoration-primary/40 rounded-xs underline decoration-1 underline-offset-4 transition-colors duration-150 ease-emphasized;
+  }
+
+  .md a:hover {
+    background-color: color-mix(in oklab, var(--md-primary) 10%, transparent);
+    text-decoration-color: var(--md-primary);
+  }
+
+  .md strong {
+    @apply text-on-surface font-bold;
+  }
+
+  .md code {
+    @apply font-mono text-[0.9em];
+  }
+
+  .md :not(pre) > code {
+    @apply bg-surface-container-highest rounded-sm px-1.5 py-0.5;
+  }
+
+  .md ul {
+    @apply my-4 list-disc pl-6;
+  }
+
+  .md ol {
+    @apply my-4 list-decimal pl-6;
+  }
+
+  .md li {
+    @apply pl-1;
+  }
+
+  .md li::marker {
+    color: var(--md-primary);
+  }
+
+  .md li > ul,
+  .md li > ol {
+    @apply my-2;
+  }
+
+  .md table {
+    @apply border-outline-variant mx-auto my-6 w-fit max-w-full overflow-hidden rounded-lg border;
+  }
+
+  .md th,
+  .md td {
+    @apply px-4 py-2;
+  }
+
+  .md th {
+    @apply bg-surface-container-high font-semibold;
+  }
+
+  .md pre.astro-code {
+    @apply rounded-lg p-4 text-[0.9rem]/[1.7] my-4 overflow-x-auto;
+    /* 代码块始终暖色深底，配深色 token 配色（深色模式换用 surface 容器色） */
+    background-color: var(--md-inverse-surface);
+    color: var(--md-inverse-on-surface);
+    tab-size: 2;
+  }
+
+  .md pre.astro-code span {
+    color: var(--shiki-dark, inherit);
+  }
+
+  .md blockquote {
+    @apply bg-primary/6 border-primary text-on-surface-variant my-4 rounded-r-lg border-l-4 px-4 py-2;
+  }
+
+  .md blockquote > :first-child {
+    @apply mt-0;
+  }
+
+  .md blockquote > :last-child {
+    @apply mb-0;
+  }
+
+  .md img,
+  .md video {
+    @apply rounded-lg mx-auto my-4 w-fit max-w-full;
+  }
+
+  .md hr {
+    @apply border-outline-variant my-10;
+  }
 }
 
-.inside-ib-link {
-  @apply inline-block text-yellow-800 dark:text-yellow-200 hover:bg-yellow-300/60 hover:dark:bg-yellow-900/60 underline bg-transparent transition-colors duration-100 ease-in;
-}
-
-.md h1 {
-  @apply text-7xl mt-20 mb-5;
-}
-
-.md h2 {
-  @apply text-5xl mt-10 mb-4;
-}
-
-.md h3 {
-  @apply text-4xl mt-8 mb-4;
-}
-
-.md h4 {
-  @apply text-3xl mt-6 mb-3;
-}
-
-.md h5 {
-  @apply text-2xl mt-4 mb-2 font-semibold;
-}
-
-.md h6 {
-  @apply text-xl mt-2 mb-1 font-semibold;
-}
-
-.md p {
-  @apply my-4;
-  line-height: 1.5em;
-}
-
-.md a {
-  @apply text-sky-800 dark:text-sky-200 underline hover:bg-sky-300/60 hover:dark:bg-sky-900/60 bg-transparent transition-colors duration-100 ease-in;
-}
-
-.md code {
-  @apply font-mono;
-}
-
-.md ul,
-.md ol {
-  display: block;
-  list-style-type: disc;
-  padding-inline-start: 2rem;
-  @apply my-4;
-}
-
-.md ol {
-  list-style-type: decimal;
-}
-
-.md li {
-  display: list-item;
-  text-align: match-parent;
-}
-
-.md ::marker {
-  unicode-bidi: isolate;
-  font-variant-numeric: tabular-nums;
-  text-transform: none;
-}
-
-.md table {
-  @apply w-fit mx-auto bg-stone-200 dark:bg-stone-800 rounded-lg overflow-hidden;
-}
-
-.md td,
-.md th {
-  @apply px-4;
-}
-
-.md th {
-  @apply bg-stone-100 dark:bg-stone-700;
-}
-
-.md pre.astro-code {
-  @apply p-4 rounded-lg w-full max-w-full my-4;
-}
-
-.md img,
-.md video {
-  @apply p-4 rounded-lg w-fit max-w-full mx-auto;
-}
-
-.md blockquote {
-  @apply pl-4 relative before:bottom-0 before:top-0 before:w-1 before:bg-sky-800 before:absolute before:left-[0.325rem] before:rounded-full;
+@media (prefers-color-scheme: dark) {
+  .md pre.astro-code {
+    background-color: var(--md-surface-container-highest);
+    color: var(--md-on-surface);
+  }
 }

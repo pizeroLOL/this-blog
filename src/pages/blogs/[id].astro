@@ -6,7 +6,9 @@ import {
   type RenderedContent,
 } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.astro";
 import WebInfo from "../../components/WebInfo.astro";
+import timeFormat from "../../scripts/timeFormat";
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
   const posts = await getCollection("blogs");
@@ -35,19 +37,65 @@ const { Content } = await render(post);
   description={post.data.description}
   keywords={post.data.tags}
 >
-  <header class="mt-2 mx-auto sticky top-2 px-8 max-w-[60rem] z-50">
-    <div
-      class="flex bg-stone-200 dark:bg-stone-700 py-2 px-4 justify-center rounded-full gap-4"
-    >
-      <a href="/" class="inside-link">首页</a>
+  <header class="m3-top-bar">
+    <div class="mx-auto flex h-16 max-w-[64rem] items-center gap-1 px-3">
+      <a href="/" class="m3-icon-btn" aria-label="返回首页">
+        <Icon name="arrow-left" />
+      </a>
+      <span class="text-label text-on-surface-variant px-1">blogs</span>
+      <span class="text-label text-on-surface-variant/50">/</span>
+      <span class="text-label truncate px-1">{post.data.title}</span>
     </div>
   </header>
-  <main class="md px-8 py-4 max-w-[60rem] mx-auto">
-    <h1 id={post.data.title}>{post.data.title}</h1>
-    <div></div>
-    <Content />
+
+  <main class="mx-auto max-w-[64rem] px-4 pb-24">
+    <article class="md mx-auto max-w-[46rem]">
+      <header class="m3-rise mt-6 mb-10 flex flex-col gap-4">
+        <div class="flex flex-wrap items-center gap-2">
+          {
+            post.data.tags.map((tag) => (
+              <span class="m3-chip m3-chip-tonal">{tag}</span>
+            ))
+          }
+          <time
+            class="text-label text-on-surface-variant px-1 tabular-nums"
+            datetime={post.data.date.toISOString()}
+          >
+            {timeFormat(post.data.date)}
+          </time>
+        </div>
+        <h1 class="text-headline text-wrap sm:text-display">
+          {post.data.title}
+        </h1>
+      </header>
+      <div class="m3-rise" style="animation-delay: 60ms">
+        <Content />
+      </div>
+    </article>
   </main>
-  <footer class="m-4">
+
+  <footer class="pb-10">
     <WebInfo />
   </footer>
+
+  <button
+    id="to-top"
+    type="button"
+    class="m3-fab m3-fab-hidden fixed right-4 bottom-4 z-50 sm:right-8 sm:bottom-8"
+    aria-label="回到顶部"
+  >
+    <Icon name="arrow-up" />
+  </button>
+
+  <script>
+    const fab = document.getElementById("to-top");
+    const updateFab = () => {
+      fab?.classList.toggle("m3-fab-hidden", window.scrollY < 480);
+    };
+    window.addEventListener("scroll", updateFab, { passive: true });
+    updateFab();
+    fab?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
 </Base>

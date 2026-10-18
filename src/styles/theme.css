@@ -1,0 +1,85 @@
+/* ===========================================================================
+ * Material 3 Expressive 配色令牌 —— 自动生成，请勿手改
+ *
+ * 生成方式：SchemeExpressive(seed)  ·  @material/material-color-utilities 0.4.0
+ * 种子色：  #ae650c  （HCT 62° / 48 / 50）
+ * 深浅模式：跟随系统 prefers-color-scheme，无运行时主题切换
+ * =========================================================================== */
+
+:root {
+  --md-primary: #685394;
+  --md-on-primary: #ffffff;
+  --md-primary-container: #eaddff;
+  --md-on-primary-container: #503b7b;
+  --md-secondary: #646032;
+  --md-on-secondary: #ffffff;
+  --md-secondary-container: #ebe5aa;
+  --md-on-secondary-container: #4b481d;
+  --md-tertiary: #78591a;
+  --md-on-tertiary: #ffffff;
+  --md-tertiary-container: #ffdea7;
+  --md-on-tertiary-container: #5d4202;
+  --md-error: #ba1a1a;
+  --md-on-error: #ffffff;
+  --md-error-container: #ffdad6;
+  --md-on-error-container: #93000a;
+  --md-surface: #fff8f3;
+  --md-on-surface: #221a10;
+  --md-surface-variant: #f4dfc5;
+  --md-on-surface-variant: #524532;
+  --md-surface-dim: #e6d8c7;
+  --md-surface-bright: #fff8f3;
+  --md-surface-container-lowest: #ffffff;
+  --md-surface-container-low: #fff1e3;
+  --md-surface-container: #fbecda;
+  --md-surface-container-high: #f5e6d5;
+  --md-surface-container-highest: #efe0cf;
+  --md-outline: #85755f;
+  --md-outline-variant: #d7c4ab;
+  --md-inverse-surface: #372f24;
+  --md-inverse-on-surface: #feeedd;
+  --md-inverse-primary: #d2bbff;
+  --md-shadow: #000000;
+  --md-scrim: #000000;
+  --md-surface-tint: #685394;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --md-primary: #d2bbff;
+    --md-on-primary: #392363;
+    --md-primary-container: #503b7b;
+    --md-on-primary-container: #eaddff;
+    --md-secondary: #cec891;
+    --md-on-secondary: #343108;
+    --md-secondary-container: #4b481d;
+    --md-on-secondary-container: #ebe5aa;
+    --md-tertiary: #e9c177;
+    --md-on-tertiary: #412d00;
+    --md-tertiary-container: #5d4202;
+    --md-on-tertiary-container: #ffdea7;
+    --md-error: #ffb4ab;
+    --md-on-error: #690005;
+    --md-error-container: #93000a;
+    --md-on-error-container: #ffdad6;
+    --md-surface: #191209;
+    --md-on-surface: #efe0cf;
+    --md-surface-variant: #524532;
+    --md-on-surface-variant: #d7c4ab;
+    --md-surface-dim: #191209;
+    --md-surface-bright: #41382c;
+    --md-surface-container-lowest: #130d05;
+    --md-surface-container-low: #221a10;
+    --md-surface-container: #261e14;
+    --md-surface-container-high: #31291e;
+    --md-surface-container-highest: #3c3328;
+    --md-outline: #9f8e77;
+    --md-outline-variant: #524532;
+    --md-inverse-surface: #efe0cf;
+    --md-inverse-on-surface: #372f24;
+    --md-inverse-primary: #685394;
+    --md-shadow: #000000;
+    --md-scrim: #000000;
+    --md-surface-tint: #d2bbff;
+  }
+}

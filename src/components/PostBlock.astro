@@ -1,4 +1,5 @@
 ---
+import Icon from "./Icon.astro";
 import timeFormat from "../scripts/timeFormat";
 
 type Props = {
@@ -15,25 +16,30 @@ type Props = {
 const post = Astro.props.post;
 ---
 
-<a href={`/blogs/${post.id}`} class="block w-full">
+<a href={`/blogs/${post.id}`} class="group block w-full rounded-xl">
   <article
-    class="flex flex-col gap-2 p-2 rounded-lg bg-stone-200 dark:bg-stone-800 hover:bg-stone-100 dark:hover:bg-stone-700 transition duration-100"
+    class="m3-card m3-card-interactive flex flex-col gap-3 p-4 group-active:scale-[0.995] sm:p-5"
   >
-    <div class="text-2xl">{post.data.title}</div>
-    <div class="flex gap-2 flex-wrap text-nowrap">
-      <div class="flex gap-2 flex-wrap text-nowrap">
-        {
-          post.data.tags.map((tag) => (
-            <div class="px-2 rounded-md bg-sky-300/60 dark:bg-sky-800/60">
-              {tag}
-            </div>
-          ))
-        }
-      </div>
-      <time datetime={post.data.date.toISOString()}>
+    <div class="flex items-center gap-3">
+      <h3 class="text-title flex-1 text-wrap">{post.data.title}</h3>
+      <Icon
+        name="chevron-right"
+        class="text-on-surface-variant group-hover:text-primary ease-spring shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+      />
+    </div>
+    <div class="flex flex-wrap items-center gap-2">
+      {
+        post.data.tags.map((tag) => (
+          <span class="m3-chip m3-chip-tonal">{tag}</span>
+        ))
+      }
+      <time
+        class="text-label text-on-surface-variant ml-auto tabular-nums"
+        datetime={post.data.date.toISOString()}
+      >
         {timeFormat(post.data.date)}
       </time>
     </div>
-    <p>{post.data.description}</p>
+    <p class="text-on-surface-variant">{post.data.description}</p>
   </article>
 </a>

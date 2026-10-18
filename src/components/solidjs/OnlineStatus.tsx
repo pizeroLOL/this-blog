@@ -45,13 +45,13 @@ const getStatus = () =>
     });
 
 const status = (props: StatusType) => {
-  const classList = ["w-2 h-2 rounded-full", props.color].join(" ");
+  const dot = ["size-2 rounded-full", props.color].join(" ");
   return (
-    <div class="flex gap-2 items-center">
-      <div class={classList}></div>
-      <div>{props.text}</div>
+    <div class="m3-chip m3-chip-hero">
+      <span class={dot}></span>
+      <span>{props.text}</span>
       {props.text == "离线" && props.lastOnline && (
-        <div>{props.lastOnline}</div>
+        <span class="opacity-70">{props.lastOnline}</span>
       )}
     </div>
   );
