@@ -8,5 +8,5 @@ export default async function getVisiblePosts() {
   const posts = await getCollection("blogs");
   return posts
     .filter((post) => import.meta.env.DEV || !post.data.tags.includes("测试"))
-    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+    .toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }

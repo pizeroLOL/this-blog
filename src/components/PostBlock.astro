@@ -26,9 +26,7 @@ const delay =
   class="group m3-rise block w-full rounded-xl"
   style={delay}
 >
-  <article
-    class="m3-card m3-card-interactive flex flex-col gap-3 p-4 group-active:scale-[0.995] sm:p-5"
-  >
+  <article class="m3-card m3-card-interactive flex flex-col gap-3 p-4 group-active:scale-[0.995] sm:p-5">
     <div class="flex items-center gap-3">
       <h3 class="text-title flex-1 text-wrap">{post.data.title}</h3>
       <Icon
@@ -37,11 +35,9 @@ const delay =
       />
     </div>
     <div class="flex flex-wrap items-center gap-2">
-      {
-        post.data.tags.map((tag) => (
-          <span class="m3-chip m3-chip-tonal">{tag}</span>
-        ))
-      }
+      {post.data.tags.map((tag) => (
+        <span class="m3-chip m3-chip-tonal">{tag}</span>
+      ))}
       <time
         class="text-label text-on-surface-variant ml-auto tabular-nums"
         datetime={post.data.date.toISOString()}

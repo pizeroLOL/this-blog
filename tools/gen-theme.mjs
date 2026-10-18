@@ -95,9 +95,9 @@ async function extractSeed() {
     .raw()
     .toBuffer({ resolveWithObject: true });
 
-  const pixels = new Array(info.width * info.height);
-  for (let i = 0; i < pixels.length; i++) {
-    pixels[i] = argbFromRgb(data[i * 3], data[i * 3 + 1], data[i * 3 + 2]);
+  const pixels = [];
+  for (let i = 0; i < info.width * info.height; i++) {
+    pixels.push(argbFromRgb(data[i * 3], data[i * 3 + 1], data[i * 3 + 2]));
   }
 
   const originalRandom = Math.random;

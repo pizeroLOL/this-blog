@@ -7,40 +7,30 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "fmt": "prettier --write .",
-    "lint": "eslint .",
-    "theme": "node --import ./tools/esm-extensionless.mjs tools/gen-theme.mjs"
+    "lint": "oxlint",
+    "theme": "node --import ./tools/esm-extensionless.mjs tools/gen-theme.mjs",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
-    "@astrojs/sitemap": "^3.7.3",
-    "@astrojs/solid-js": "^7.0.1",
-    "@astrojs/ts-plugin": "^1.10.10",
+    "@astrojs/sitemap": "^3.7.4",
+    "@astrojs/solid-js": "^7.1.0",
+    "@astrojs/ts-plugin": "^1.10.12",
     "@fontsource-variable/noto-sans-sc": "^5.3.1",
     "@fontsource-variable/roboto-flex": "^5.3.0",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.1.6",
+    "astro": "^7.4.0",
     "sharp": "^0.35.5",
-    "solid-js": "^1.9.14",
+    "solid-js": "^1.9.17",
     "tailwindcss": "^4.3.3",
-    "zod": "^4.4.3"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@astrojs/compiler-rs": "^0.5.2",
     "@astrojs/markdown-remark": "^7.3.3",
-    "@eslint/css": "^1.4.0",
-    "@eslint/js": "^10.0.1",
-    "@eslint/json": "^2.0.1",
-    "@eslint/markdown": "^8.0.3",
     "@material/material-color-utilities": "^0.4.0",
-    "@typescript-eslint/parser": "^8.65.0",
-    "eslint": "^10.8.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-astro": "^3.0.1",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
-    "globals": "^17.8.0",
-    "prettier": "^3.9.6",
-    "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-toml": "^2.0.6",
-    "typescript-eslint": "^8.65.0"
+    "oxfmt": "^0.73.0",
+    "oxlint": "^1.88.0"
   }
 }

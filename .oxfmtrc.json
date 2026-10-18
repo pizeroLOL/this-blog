@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "semi": true,
+  "quoteProps": "as-needed",
+  "endOfLine": "lf",
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "printWidth": 80,
+  "sortPackageJson": false,
+  "astro": {},
+  "associations": [
+    {
+      "files": ["*.astro"],
+      "language": "astro"
+    }
+  ],
+  "ignorePatterns": [
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml",
+    "src/styles/theme.css"
+  ]
+}

@@ -44,16 +44,12 @@ const icon = icons[name];
   class={className}
   aria-hidden="true"
 >
-  {
-    icon.kind === "stroke" ? (
-      icon.paths.map((d) => <path d={d} />)
-    ) : (
-      <path d={icon.path} />
-    )
-  }
-  {
-    icon.kind === "stroke" && icon.dot && (
-      <circle cx="5" cy="19" r="1.6" fill="currentColor" />
-    )
-  }
+  {icon.kind === "stroke" ? (
+    icon.paths.map((d) => <path d={d} />)
+  ) : (
+    <path d={icon.path} />
+  )}
+  {icon.kind === "stroke" && icon.dot && (
+    <circle cx="5" cy="19" r="1.6" fill="currentColor" />
+  )}
 </svg>

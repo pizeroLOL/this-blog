@@ -52,11 +52,9 @@ const { Content } = await render(post);
     <article class="md mx-auto max-w-[46rem]">
       <header class="m3-rise mt-6 mb-10 flex flex-col gap-4">
         <div class="flex flex-wrap items-center gap-2">
-          {
-            post.data.tags.map((tag) => (
-              <span class="m3-chip m3-chip-tonal">{tag}</span>
-            ))
-          }
+          {post.data.tags.map((tag) => (
+            <span class="m3-chip m3-chip-tonal">{tag}</span>
+          ))}
           <time
             class="text-label text-on-surface-variant px-1 tabular-nums"
             datetime={post.data.date.toISOString()}
