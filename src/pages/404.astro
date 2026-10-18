@@ -1,22 +1,81 @@
 ---
-import WebInfo from "../components/WebInfo.astro";
+import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import PostBlock from "../components/PostBlock.astro";
+import WebInfo from "../components/WebInfo.astro";
+
+const recent = (await getCollection("blogs"))
+  .filter((post) => import.meta.env.DEV || !post.data.tags.includes("测试"))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
 ---
 
-<Base title="404" description="页面未找到">
-  <main class="relative mx-auto flex min-h-dvh max-w-[64rem] flex-col px-4">
-    <section class="m3-rise mt-[18dvh] flex flex-col items-start gap-6">
-      <span
-        class="bg-tertiary-container text-on-tertiary-container ease-spring grid size-16 rotate-6 place-items-center rounded-2xl font-mono text-base font-bold transition-transform duration-300 hover:-rotate-3"
+<Base title="404" description="页面未找到" noindex>
+  <main class="mx-auto flex min-h-dvh max-w-[64rem] flex-col px-4">
+    <section
+      class="m3-rise mt-[12dvh] flex flex-col items-start gap-5 sm:mt-[16dvh]"
+    >
+      <div class="flex flex-wrap items-center gap-3">
+        <span
+          class="bg-tertiary-container text-on-tertiary-container ease-spring grid size-14 shrink-0 rotate-6 place-items-center rounded-xl font-mono text-base font-bold transition-transform duration-300 hover:-rotate-3"
+        >
+          QwQ
+        </span>
+        <span class="m3-chip m3-chip-tonal tracking-widest">
+          404 Not Found
+        </span>
+      </div>
+      <h1 class="text-display text-wrap">页面走丢了</h1>
+      <p class="text-title text-on-surface-variant max-w-[34rem] text-wrap">
+        你访问的地址不存在，可能是链接写错了，或者页面已经被搬走。
+      </p>
+      <code
+        id="missing-path"
+        class="bg-surface-container-high text-on-surface-variant text-label hidden w-fit max-w-full truncate rounded-full px-3 py-1 font-mono"
       >
-        QwQ
-      </span>
-      <h1 class="text-display">404</h1>
-      <p class="text-title text-on-surface-variant">页面未找到</p>
-      <a href="/" class="m3-btn m3-btn-filled"> 回到首页 </a>
+      </code>
+      <div class="flex flex-wrap items-center gap-2">
+        <a href="/" class="m3-btn m3-btn-filled">
+          <Icon name="arrow-left" size={18} />
+          回到首页
+        </a>
+        <a href="/rss.xml" class="m3-btn m3-btn-text">RSS 订阅</a>
+      </div>
     </section>
-    <div class="mt-auto pb-10">
+
+    <section class="mt-16 flex flex-col gap-4">
+      <h2 class="text-title">最近更新</h2>
+      <div class="flex flex-col gap-3">
+        {
+          recent.map((post, i) => (
+            <div class="m3-rise" style={`animation-delay: ${120 + i * 60}ms`}>
+              <PostBlock post={post} />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <div class="mt-auto pt-12 pb-10">
       <WebInfo />
     </div>
   </main>
+
+  <script>
+    // 把请求路径显示出来（静态页拿不到服务端信息，只能读 location）
+    const pathChip = document.getElementById("missing-path");
+    if (pathChip) {
+      let path = location.pathname;
+      try {
+        path = decodeURIComponent(path);
+      } catch {
+        // 保留原始编码
+      }
+      if (path && path !== "/" && path !== "/404.html") {
+        pathChip.textContent = path;
+        pathChip.classList.remove("hidden");
+      }
+    }
+  </script>
 </Base>
