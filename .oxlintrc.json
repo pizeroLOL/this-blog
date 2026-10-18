@@ -5,10 +5,23 @@
     "correctness": "error",
     "suspicious": "warn"
   },
-  "rules": {},
+  "rules": {
+    "tailwindcss/no-conflicting-classes": "error",
+    "tailwindcss/no-unknown-classes": "error",
+    "tailwindcss/no-duplicate-classes": "warn",
+    "tailwindcss/enforce-canonical": "warn",
+    "tailwindcss/enforce-sort-order": "warn",
+    "tailwindcss/no-hardcoded-colors": "warn"
+  },
   "env": {
     "browser": true,
     "builtin": true
   },
-  "ignorePatterns": ["dist/**", ".astro/**"]
+  "ignorePatterns": ["dist/**", ".astro/**"],
+  "jsPlugins": ["oxlint-tailwindcss"],
+  "settings": {
+    "tailwindcss": {
+      "entryPoint": "src/styles/global.css"
+    }
+  }
 }
