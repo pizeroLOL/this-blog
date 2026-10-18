@@ -1,5 +1,7 @@
 ---
 import Icon from "../favicon.svg";
+import faviconPng from "../assets/favicon-32.png";
+import appleTouchIcon from "../assets/apple-touch-icon.png";
 import "../styles/global.css";
 interface Props {
   title?: string;
@@ -14,7 +16,11 @@ const props = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <!-- PNG 回退在前、SVG 在后：支持 SVG 的浏览器用后者（可跟随明暗），
+         Safari 等不支持 SVG favicon 的浏览器回退到 PNG -->
+    <link rel="icon" href={faviconPng.src} type="image/png" sizes="32x32" />
     <link rel="icon" href={Icon.src} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={appleTouchIcon.src} />
     <meta name="author" content="pizero" />
     <meta name="color-scheme" content="dark light" />
     <meta
