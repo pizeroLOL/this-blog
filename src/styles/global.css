@@ -124,6 +124,11 @@
     @apply bg-surface text-body text-on-surface font-sans antialiased;
   }
 
+  /* <Picture> 的 <picture> 包装不参与布局，方便直接对 <img> 施尺寸 */
+  picture {
+    display: contents;
+  }
+
   /* M3 焦点环 */
   :focus-visible {
     outline: 3px solid var(--md-primary);
