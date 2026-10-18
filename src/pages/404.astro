@@ -1,14 +1,11 @@
 ---
-import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.astro";
 import PostBlock from "../components/PostBlock.astro";
 import WebInfo from "../components/WebInfo.astro";
+import getVisiblePosts from "../scripts/posts";
 
-const recent = (await getCollection("blogs"))
-  .filter((post) => import.meta.env.DEV || !post.data.tags.includes("测试"))
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 3);
+const recent = (await getVisiblePosts()).slice(0, 3);
 ---
 
 <Base title="404" description="页面未找到" noindex>
@@ -47,13 +44,7 @@ const recent = (await getCollection("blogs"))
     <section class="mt-16 flex flex-col gap-4">
       <h2 class="text-title">最近更新</h2>
       <div class="flex flex-col gap-3">
-        {
-          recent.map((post, i) => (
-            <div class="m3-rise" style={`animation-delay: ${120 + i * 60}ms`}>
-              <PostBlock post={post} />
-            </div>
-          ))
-        }
+        {recent.map((post, i) => <PostBlock post={post} index={i} />)}
       </div>
     </section>
 

@@ -83,15 +83,20 @@ const { Content } = await render(post);
     type="button"
     class="m3-fab m3-fab-hidden fixed right-4 bottom-4 z-50 sm:right-8 sm:bottom-8"
     aria-label="回到顶部"
+    inert
   >
     <Icon name="arrow-up" />
   </button>
 
   <script>
     const fab = document.getElementById("to-top");
-    const updateFab = () => {
-      fab?.classList.toggle("m3-fab-hidden", window.scrollY < 480);
+    // inert 让隐藏状态的按钮同时退出 Tab 序列与无障碍树
+    const setFabHidden = (hidden) => {
+      if (!fab) return;
+      fab.classList.toggle("m3-fab-hidden", hidden);
+      fab.inert = hidden;
     };
+    const updateFab = () => setFabHidden(window.scrollY < 480);
     window.addEventListener("scroll", updateFab, { passive: true });
     updateFab();
     fab?.addEventListener("click", () => {

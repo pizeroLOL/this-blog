@@ -1,0 +1,143 @@
+/* Markdown 正文样式（由 global.css 引入） */
+@layer components {
+  /* ---------- 正文（Markdown 渲染区）---------- */
+  .md {
+    @apply text-body;
+  }
+
+  .md > :first-child {
+    @apply mt-0;
+  }
+
+  .md h1 {
+    @apply text-headline mt-12 mb-4 font-bold;
+  }
+
+  .md h2 {
+    @apply text-headline mt-12 mb-4;
+  }
+
+  .md h3 {
+    @apply text-title mt-8 mb-3;
+  }
+
+  .md h4 {
+    @apply mt-6 mb-2 text-xl font-bold;
+  }
+
+  .md h5 {
+    @apply mt-5 mb-2 text-lg font-semibold;
+  }
+
+  .md h6 {
+    @apply mt-4 mb-2 font-semibold;
+  }
+
+  .md p {
+    @apply my-4;
+    text-wrap: pretty;
+  }
+
+  .md a {
+    @apply text-primary decoration-primary/40 rounded-xs underline decoration-1 underline-offset-4 transition-colors duration-150 ease-emphasized;
+  }
+
+  .md a:hover {
+    background-color: var(--state-primary);
+    text-decoration-color: var(--md-primary);
+  }
+
+  .md strong {
+    @apply text-on-surface font-bold;
+  }
+
+  .md code {
+    @apply font-mono text-[0.9em];
+  }
+
+  .md :not(pre) > code {
+    @apply bg-surface-container-highest rounded-sm px-1.5 py-0.5;
+  }
+
+  .md ul {
+    @apply my-4 list-disc pl-6;
+  }
+
+  .md ol {
+    @apply my-4 list-decimal pl-6;
+  }
+
+  .md li {
+    @apply pl-1;
+  }
+
+  .md li::marker {
+    color: var(--md-primary);
+  }
+
+  .md li > ul,
+  .md li > ol {
+    @apply my-2;
+  }
+
+  /* 表格由 rehype 插件包在 .md-table-wrap 里：
+     圆角/边框交给外层 div（表格自身的 overflow/radius 不生效），窄屏横向滚动 */
+  .md-table-wrap {
+    @apply border-outline-variant mx-auto my-6 w-fit max-w-full overflow-x-auto rounded-lg border;
+    scrollbar-width: thin;
+  }
+
+  .md-table-wrap table {
+    /* 保持自然宽度：窄屏时表格横向滚动，而不是把每列压成竖排 */
+    @apply my-0 w-max max-w-none border-0;
+  }
+
+  .md th,
+  .md td {
+    @apply px-4 py-2;
+  }
+
+  .md th {
+    @apply bg-surface-container-high font-semibold;
+  }
+
+  .md pre.astro-code {
+    @apply rounded-lg p-4 text-[0.9rem]/[1.7] my-4 overflow-x-auto;
+    /* 代码块始终暖色深底，配深色 token 配色（深色模式换用 surface 容器色） */
+    background-color: var(--md-inverse-surface);
+    color: var(--md-inverse-on-surface);
+    tab-size: 2;
+  }
+
+  .md pre.astro-code span {
+    color: var(--shiki-dark, inherit);
+  }
+
+  .md blockquote {
+    @apply bg-primary/6 border-primary text-on-surface-variant my-4 rounded-r-lg border-l-4 px-4 py-2;
+  }
+
+  .md blockquote > :first-child {
+    @apply mt-0;
+  }
+
+  .md blockquote > :last-child {
+    @apply mb-0;
+  }
+
+  .md img,
+  .md video {
+    @apply rounded-lg mx-auto my-4 w-fit max-w-full;
+  }
+
+  .md hr {
+    @apply border-outline-variant my-10;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .md pre.astro-code {
+    background-color: var(--md-surface-container-highest);
+    color: var(--md-on-surface);
+  }
+}

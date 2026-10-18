@@ -3,6 +3,7 @@ import Icon from "./Icon.astro";
 import timeFormat from "../scripts/timeFormat";
 
 type Props = {
+  index?: number;
   post: {
     id: string;
     data: {
@@ -13,10 +14,18 @@ type Props = {
     };
   };
 };
-const post = Astro.props.post;
+const { post, index } = Astro.props;
+const delay =
+  index === undefined
+    ? undefined
+    : { "animation-delay": `${80 + index * 50}ms` };
 ---
 
-<a href={`/blogs/${post.id}`} class="group block w-full rounded-xl">
+<a
+  href={`/blogs/${post.id}`}
+  class="group m3-rise block w-full rounded-xl"
+  style={delay}
+>
   <article
     class="m3-card m3-card-interactive flex flex-col gap-3 p-4 group-active:scale-[0.995] sm:p-5"
   >

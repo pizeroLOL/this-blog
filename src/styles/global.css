@@ -2,6 +2,7 @@
 @import "@fontsource-variable/noto-sans-sc/wght.css";
 @import "tailwindcss";
 @import "./theme.css";
+@import "./prose.css";
 
 /* ---------------------------------------------------------------------------
  * Material 3 Expressive 设计令牌
@@ -86,7 +87,6 @@
   /* —— M3 动效：emphasized 曲线 + 2025 回弹（spring 采样为 linear()）—— */
   --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
   --ease-emphasized-decel: cubic-bezier(0.05, 0.7, 0.1, 1);
-  --ease-emphasized-accel: cubic-bezier(0.3, 0, 0.8, 0.15);
   --ease-spring: linear(
     0,
     0.082,
@@ -115,6 +115,13 @@
 }
 
 @layer base {
+  /* M3 状态层：hover / press 用 color-mix 叠在内容色上，统一在这里定义 */
+  :root {
+    --state-hover: color-mix(in oklab, var(--md-on-surface) 10%, transparent);
+    --state-press: color-mix(in oklab, var(--md-on-surface) 15%, transparent);
+    --state-primary: color-mix(in oklab, var(--md-primary) 10%, transparent);
+  }
+
   html {
     background-color: var(--md-surface);
     scroll-behavior: smooth;
@@ -163,13 +170,6 @@
   from {
     opacity: 0;
     transform: translateY(16px);
-  }
-}
-
-@keyframes m3-pop {
-  from {
-    opacity: 0;
-    transform: scale(0.7);
   }
 }
 
@@ -241,19 +241,11 @@
   }
 
   .m3-icon-btn:hover {
-    background-color: color-mix(
-      in oklab,
-      var(--md-on-surface) 10%,
-      transparent
-    );
+    background-color: var(--state-hover);
   }
 
   .m3-icon-btn:active {
-    background-color: color-mix(
-      in oklab,
-      var(--md-on-surface) 15%,
-      transparent
-    );
+    background-color: var(--state-press);
   }
 
   /* ---------- 芯片 ---------- */
@@ -274,19 +266,11 @@
   }
 
   .m3-chip-link:hover {
-    background-color: color-mix(
-      in oklab,
-      var(--md-on-surface) 10%,
-      transparent
-    );
+    background-color: var(--state-hover);
   }
 
   .m3-chip-link:active {
-    background-color: color-mix(
-      in oklab,
-      var(--md-on-surface) 15%,
-      transparent
-    );
+    background-color: var(--state-press);
   }
 
   .m3-chip-hero {
@@ -315,28 +299,12 @@
     filter: brightness(1.1);
   }
 
-  .m3-btn-tonal {
-    @apply bg-secondary-container text-on-secondary-container;
-  }
-
-  .m3-btn-tonal:hover {
-    box-shadow: var(--shadow-e1);
-  }
-
   .m3-btn-text {
     @apply text-primary px-4;
   }
 
   .m3-btn-text:hover {
-    background-color: color-mix(in oklab, var(--md-primary) 10%, transparent);
-  }
-
-  .m3-btn-outlined {
-    @apply border-outline text-primary border;
-  }
-
-  .m3-btn-outlined:hover {
-    background-color: color-mix(in oklab, var(--md-primary) 10%, transparent);
+    background-color: var(--state-primary);
   }
 
   /* ---------- 扩展 FAB（回弹曲线）---------- */
@@ -359,142 +327,5 @@
   /* ---------- 入场 ---------- */
   .m3-rise {
     animation: m3-rise 500ms var(--ease-emphasized-decel) backwards;
-  }
-
-  .m3-pop {
-    animation: m3-pop 450ms var(--ease-spring) backwards;
-  }
-
-  /* ---------- 正文（Markdown 渲染区）---------- */
-  .md {
-    @apply text-body;
-  }
-
-  .md > :first-child {
-    @apply mt-0;
-  }
-
-  .md h1 {
-    @apply text-headline mt-12 mb-4 font-bold;
-  }
-
-  .md h2 {
-    @apply text-headline mt-12 mb-4;
-  }
-
-  .md h3 {
-    @apply text-title mt-8 mb-3;
-  }
-
-  .md h4 {
-    @apply mt-6 mb-2 text-xl font-bold;
-  }
-
-  .md h5 {
-    @apply mt-5 mb-2 text-lg font-semibold;
-  }
-
-  .md h6 {
-    @apply mt-4 mb-2 font-semibold;
-  }
-
-  .md p {
-    @apply my-4;
-    text-wrap: pretty;
-  }
-
-  .md a {
-    @apply text-primary decoration-primary/40 rounded-xs underline decoration-1 underline-offset-4 transition-colors duration-150 ease-emphasized;
-  }
-
-  .md a:hover {
-    background-color: color-mix(in oklab, var(--md-primary) 10%, transparent);
-    text-decoration-color: var(--md-primary);
-  }
-
-  .md strong {
-    @apply text-on-surface font-bold;
-  }
-
-  .md code {
-    @apply font-mono text-[0.9em];
-  }
-
-  .md :not(pre) > code {
-    @apply bg-surface-container-highest rounded-sm px-1.5 py-0.5;
-  }
-
-  .md ul {
-    @apply my-4 list-disc pl-6;
-  }
-
-  .md ol {
-    @apply my-4 list-decimal pl-6;
-  }
-
-  .md li {
-    @apply pl-1;
-  }
-
-  .md li::marker {
-    color: var(--md-primary);
-  }
-
-  .md li > ul,
-  .md li > ol {
-    @apply my-2;
-  }
-
-  .md table {
-    @apply border-outline-variant mx-auto my-6 w-fit max-w-full overflow-hidden rounded-lg border;
-  }
-
-  .md th,
-  .md td {
-    @apply px-4 py-2;
-  }
-
-  .md th {
-    @apply bg-surface-container-high font-semibold;
-  }
-
-  .md pre.astro-code {
-    @apply rounded-lg p-4 text-[0.9rem]/[1.7] my-4 overflow-x-auto;
-    /* 代码块始终暖色深底，配深色 token 配色（深色模式换用 surface 容器色） */
-    background-color: var(--md-inverse-surface);
-    color: var(--md-inverse-on-surface);
-    tab-size: 2;
-  }
-
-  .md pre.astro-code span {
-    color: var(--shiki-dark, inherit);
-  }
-
-  .md blockquote {
-    @apply bg-primary/6 border-primary text-on-surface-variant my-4 rounded-r-lg border-l-4 px-4 py-2;
-  }
-
-  .md blockquote > :first-child {
-    @apply mt-0;
-  }
-
-  .md blockquote > :last-child {
-    @apply mb-0;
-  }
-
-  .md img,
-  .md video {
-    @apply rounded-lg mx-auto my-4 w-fit max-w-full;
-  }
-
-  .md hr {
-    @apply border-outline-variant my-10;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .md pre.astro-code {
-    background-color: var(--md-surface-container-highest);
-    color: var(--md-on-surface);
   }
 }

@@ -1,5 +1,4 @@
 ---
-import { getCollection } from "astro:content";
 import { Picture } from "astro:assets";
 import config from "../../indexConfig.json";
 import Icon from "../components/Icon.astro";
@@ -7,14 +6,10 @@ import PostBlock from "../components/PostBlock.astro";
 import Base from "../layouts/Base.astro";
 import WebInfo from "../components/WebInfo.astro";
 import OnlineStatus from "../components/solidjs/OnlineStatus";
+import getVisiblePosts from "../scripts/posts";
 import luoxi from "../assets/luoxi.jpg";
 
-const posts = await getCollection("blogs");
-const visiblePosts = (
-  import.meta.env.DEV
-    ? posts
-    : posts.filter((post) => !post.data.tags.includes("测试"))
-).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const posts = await getVisiblePosts();
 ---
 
 <Base
@@ -90,8 +85,7 @@ const visiblePosts = (
         </p>
         <p class="text-on-surface-variant">
           自主起的项目基本上没有，全是玩具，用的都是轮椅，喜欢 KISS
-          和写一次性代码，<span class="whitespace-nowrap">突出一个能用就行</span
-          >。
+          和写一次性代码，突出一个能用就行。
         </p>
       </div>
       <div class="mt-6 flex flex-wrap items-center gap-2">
@@ -113,13 +107,7 @@ const visiblePosts = (
         博客
       </h2>
       <div class="flex flex-col gap-3">
-        {
-          visiblePosts.map((post, i) => (
-            <div class="m3-rise" style={`animation-delay: ${80 + i * 50}ms`}>
-              <PostBlock post={post} />
-            </div>
-          ))
-        }
+        {posts.map((post, i) => <PostBlock post={post} index={i} />)}
       </div>
     </section>
   </main>
