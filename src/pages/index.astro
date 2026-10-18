@@ -22,6 +22,20 @@ const visiblePosts = (
   description="Pizero 的个人博客"
   keywords={["blog", "pizero", "博客"]}
 >
+  <!-- 整页固定背景：滚动时 blur 升高、透明度降低（由页面底部脚本驱动） -->
+  <div class="hero-bg" id="hero-bg" aria-hidden="true">
+    <Picture
+      src={luoxi}
+      formats={["avif", "webp"]}
+      widths={[640, 1024, 1536, 2048]}
+      sizes="100vw"
+      alt=""
+      loading="eager"
+      fetchpriority="high"
+      quality={72}
+    />
+  </div>
+
   <header class="m3-top-bar">
     <div class="mx-auto flex h-16 max-w-[64rem] items-center gap-2 px-4">
       <a href="/" class="flex items-center gap-3" aria-label="pizero 首页">
@@ -48,77 +62,55 @@ const visiblePosts = (
 
   <main class="mx-auto flex max-w-[64rem] flex-col gap-10 px-4 pb-16">
     <section
-      class="m3-rise bg-primary-container text-on-primary-container rounded-3xl relative mt-2 overflow-hidden"
+      id="hero"
+      class="m3-rise m3-glass text-on-primary-container rounded-3xl relative mt-2 p-6 sm:p-10"
     >
-      <div class="relative h-48 sm:h-72">
-        <Picture
-          src={luoxi}
-          formats={["avif", "webp"]}
-          widths={[640, 1024, 1536, 2048]}
-          sizes="(min-width: 64rem) 64rem, 100vw"
-          alt="窗边看书的狼耳少女插画"
-          loading="eager"
-          fetchpriority="high"
-          quality={72}
-          class="size-full object-cover object-[50%_32%]"
-        />
-        <div
-          class="from-primary-container/60 pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t sm:h-24 to-transparent"
-          aria-hidden="true"
-        >
-        </div>
+      <div class="flex flex-wrap items-center gap-4">
         <span
-          class="bg-on-primary-container text-primary-container ring-primary-container ease-spring absolute bottom-0 left-6 grid size-16 translate-y-1/2 -rotate-6 place-items-center rounded-xl font-mono text-lg font-bold ring-4 transition-transform duration-300 hover:rotate-3 sm:left-10"
+          class="bg-on-primary-container text-primary-container ease-spring grid size-14 shrink-0 -rotate-6 place-items-center rounded-xl font-mono text-lg font-bold transition-transform duration-300 hover:rotate-3"
         >
           &gt;_&lt;
         </span>
-      </div>
-      <div
-        class="relative flex flex-col gap-6 px-6 pt-12 pb-6 sm:px-10 sm:pt-14 sm:pb-10"
-      >
-        <div
-          class="bg-tertiary-container/40 pointer-events-none absolute -right-16 -bottom-24 size-64 rounded-full blur-3xl"
-          aria-hidden="true"
+        <span
+          class="text-label border-on-primary-container/30 rounded-full border px-3 py-1 tracking-widest uppercase"
         >
-        </div>
-        <div class="relative flex flex-wrap items-center gap-4">
-          <span
-            class="text-label border-on-primary-container/30 rounded-full border px-3 py-1 tracking-widest uppercase"
-          >
-            Personal Blog
-          </span>
-        </div>
-        <h1 class="text-display relative">Pizero</h1>
-        <div class="relative flex max-w-[42rem] flex-col gap-3">
-          <p class="text-on-primary-container/90">
-            这个网名基本上就是一个随机数随机出来的，只要能确保指向的是我，怎么叫都行。
-          </p>
-          <p class="text-on-primary-container/90">
-            学业上基本上就是混子，上课摸鱼摆烂，能多拿一分就一分，拿不到开摆。
-          </p>
-          <p class="text-on-primary-container/90">
-            摸鱼摆烂乐子人，技校在读学生，会点前端/后端开发，偶尔写写代码。
-          </p>
-          <p class="text-on-primary-container/90">
-            自主起的项目基本上没有，全是玩具，用的都是轮椅，喜欢 KISS
-            和写一次性代码，突出一个能用就行。
-          </p>
-        </div>
-        <div class="relative flex flex-wrap items-center gap-2">
-          <OnlineStatus client:only="solidjs" />
-          {
-            config.links.map((i) => (
-              <a href={i.link} class="m3-chip m3-chip-hero">
-                {i.name}
-              </a>
-            ))
-          }
-        </div>
+          Personal Blog
+        </span>
+      </div>
+      <h1 class="text-display mt-6">Pizero</h1>
+      <div class="mt-6 flex max-w-[42rem] flex-col gap-3">
+        <p class="text-on-primary-container/90">
+          这个网名基本上就是一个随机数随机出来的，只要能确保指向的是我，怎么叫都行。
+        </p>
+        <p class="text-on-primary-container/90">
+          学业上基本上就是混子，上课摸鱼摆烂，能多拿一分就一分，拿不到开摆。
+        </p>
+        <p class="text-on-primary-container/90">
+          摸鱼摆烂乐子人，技校在读学生，会点前端/后端开发，偶尔写写代码。
+        </p>
+        <p class="text-on-primary-container/90">
+          自主起的项目基本上没有，全是玩具，用的都是轮椅，喜欢 KISS
+          和写一次性代码，突出一个能用就行。
+        </p>
+      </div>
+      <div class="mt-6 flex flex-wrap items-center gap-2">
+        <OnlineStatus client:only="solidjs" />
+        {
+          config.links.map((i) => (
+            <a href={i.link} class="m3-chip m3-chip-hero">
+              {i.name}
+            </a>
+          ))
+        }
       </div>
     </section>
 
-    <section class="flex flex-col gap-4">
-      <h2 class="text-headline">博客</h2>
+    <section id="posts" class="flex flex-col gap-4">
+      <h2
+        class="text-headline bg-surface/80 w-fit rounded-2xl px-4 py-1 backdrop-blur-md"
+      >
+        博客
+      </h2>
       <div class="flex flex-col gap-3">
         {
           visiblePosts.map((post, i) => (
@@ -134,4 +126,44 @@ const visiblePosts = (
   <footer class="pb-10">
     <WebInfo />
   </footer>
+
+  <script>
+    // 滚动出 Hero 时，背景逐渐模糊并变淡（模拟 M3E 状态栏压暗 / 模糊）
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    const bg = document.getElementById("hero-bg");
+    const hero = document.getElementById("hero");
+
+    if (bg && hero && !reduceMotion) {
+      const MAX_BLUR = 16;
+      const MIN_ALPHA = 0.32;
+      let frame = 0;
+
+      const update = () => {
+        frame = 0;
+        const rect = hero.getBoundingClientRect();
+        const raw = Math.min(
+          1,
+          Math.max(0, -rect.top / Math.max(1, rect.height))
+        );
+        // smoothstep：大部分变化发生在 Hero 快滚出视口时
+        const t = raw * raw * (3 - 2 * raw);
+        bg.style.setProperty("--hero-blur", `${(t * MAX_BLUR).toFixed(2)}px`);
+        bg.style.setProperty(
+          "--hero-alpha",
+          `${(1 - t * (1 - MIN_ALPHA)).toFixed(3)}`
+        );
+      };
+
+      const onScroll = () => {
+        if (frame) return;
+        frame = requestAnimationFrame(update);
+      };
+
+      addEventListener("scroll", onScroll, { passive: true });
+      addEventListener("resize", onScroll);
+      update();
+    }
+  </script>
 </Base>
