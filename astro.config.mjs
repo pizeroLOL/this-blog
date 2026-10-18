@@ -10,7 +10,7 @@ import solidJs from "@astrojs/solid-js";
 
 /** 给 Markdown 表格包一层 div：圆角由外层裁切、窄屏可横向滚动 */
 /** @param {any} node */
-function walk(node) {
+function wrapTables(node) {
   if (!Array.isArray(node.children)) return;
   node.children = node.children.map((child) => {
     if (child.type === "element" && child.tagName === "table") {
@@ -21,15 +21,32 @@ function walk(node) {
         children: [child],
       };
     }
-    walk(child);
+    wrapTables(child);
     return child;
   });
 }
 
 function rehypeWrapTables() {
-  /** @param {any} tree */
-  return (tree) => walk(tree);
+  return wrapTables;
 }
+
+/**
+ * Shiki 单主题会把主题底色写进 <pre> 的内联样式，
+ * 去掉它，让 prose.css 统一控制明暗两种模式下的代码块背景。
+ * @param {any} node
+ */
+function stripCodeBackground(node) {
+  const style = node.properties?.style;
+  if (typeof style !== "string") return;
+  node.properties.style = style
+    .split(";")
+    .filter((decl) => !decl.trim().startsWith("background-color:"))
+    .join(";");
+}
+
+const shikiTransformers = [
+  { name: "strip-code-background", pre: stripCodeBackground },
+];
 
 // https://astro.build/config
 export default defineConfig({
@@ -38,10 +55,11 @@ export default defineConfig({
   markdown: {
     // rehype 插件走新的 unified() processor（markdown.rehypePlugins 已废弃）
     processor: unified({ rehypePlugins: [rehypeWrapTables] }),
-    // 深浅两套代码高亮配色，由 global.css 决定何时使用哪套
+    // 代码块始终是暖色深底，所以只配一套深色高亮配色；
+    // github-dark-default 的注释/标点在两种背景上都有足够对比度
     shikiConfig: {
-      themes: { light: "vitesse-light", dark: "vitesse-dark" },
-      defaultColor: false,
+      theme: "github-dark-default",
+      transformers: shikiTransformers,
     },
   },
   vite: {

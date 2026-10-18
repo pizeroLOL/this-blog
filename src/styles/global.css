@@ -120,6 +120,12 @@
     --state-hover: color-mix(in oklab, var(--md-on-surface) 10%, transparent);
     --state-press: color-mix(in oklab, var(--md-on-surface) 15%, transparent);
     --state-primary: color-mix(in oklab, var(--md-primary) 10%, transparent);
+    /* filled 按钮：on-primary 状态层叠在 primary 上（直接用混合后的实色） */
+    --state-on-primary: color-mix(
+      in oklab,
+      var(--md-on-primary) 8%,
+      var(--md-primary)
+    );
   }
 
   html {
@@ -235,16 +241,18 @@
     box-shadow: var(--shadow-e1);
   }
 
-  /* ---------- 图标按钮（状态层用 color-mix 叠在内容色上）---------- */
+  /* ---------- 图标按钮 / 链接芯片（共用状态层）---------- */
   .m3-icon-btn {
     @apply text-on-surface-variant grid size-10 shrink-0 place-items-center rounded-full transition-colors duration-150 ease-emphasized;
   }
 
-  .m3-icon-btn:hover {
+  .m3-icon-btn:hover,
+  .m3-chip-link:hover {
     background-color: var(--state-hover);
   }
 
-  .m3-icon-btn:active {
+  .m3-icon-btn:active,
+  .m3-chip-link:active {
     background-color: var(--state-press);
   }
 
@@ -263,14 +271,6 @@
 
   .m3-chip-link {
     @apply transition-colors duration-150 ease-emphasized;
-  }
-
-  .m3-chip-link:hover {
-    background-color: var(--state-hover);
-  }
-
-  .m3-chip-link:active {
-    background-color: var(--state-press);
   }
 
   .m3-chip-hero {
@@ -295,8 +295,8 @@
   }
 
   .m3-btn-filled:hover {
+    background-color: var(--state-on-primary);
     box-shadow: var(--shadow-e1);
-    filter: brightness(1.1);
   }
 
   .m3-btn-text {

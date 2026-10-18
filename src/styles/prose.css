@@ -103,14 +103,11 @@
 
   .md pre.astro-code {
     @apply rounded-lg p-4 text-[0.9rem]/[1.7] my-4 overflow-x-auto;
-    /* 代码块始终暖色深底，配深色 token 配色（深色模式换用 surface 容器色） */
+    /* 代码块始终暖色深底，配 github-dark-default 的深色 token（内联样式）；
+       深色模式换用 surface 容器色，背景由这里覆盖，主题底色已在上游剥掉 */
     background-color: var(--md-inverse-surface);
     color: var(--md-inverse-on-surface);
     tab-size: 2;
-  }
-
-  .md pre.astro-code span {
-    color: var(--shiki-dark, inherit);
   }
 
   .md blockquote {

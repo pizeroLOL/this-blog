@@ -1,9 +1,9 @@
 ---
 import Icon from "./Icon.astro";
-import timeFormat from "../scripts/timeFormat";
+import PostMeta from "./PostMeta.astro";
 
 type Props = {
-  index?: number;
+  staggerIndex?: number;
   post: {
     id: string;
     data: {
@@ -14,11 +14,11 @@ type Props = {
     };
   };
 };
-const { post, index } = Astro.props;
+const { post, staggerIndex } = Astro.props;
 const delay =
-  index === undefined
+  staggerIndex === undefined
     ? undefined
-    : { "animation-delay": `${80 + index * 50}ms` };
+    : { "animation-delay": `${80 + staggerIndex * 50}ms` };
 ---
 
 <a
@@ -34,17 +34,7 @@ const delay =
         class="text-on-surface-variant group-hover:text-primary ease-spring shrink-0 transition-transform duration-300 group-hover:translate-x-1"
       />
     </div>
-    <div class="flex flex-wrap items-center gap-2">
-      {post.data.tags.map((tag) => (
-        <span class="m3-chip m3-chip-tonal">{tag}</span>
-      ))}
-      <time
-        class="text-label text-on-surface-variant ml-auto tabular-nums"
-        datetime={post.data.date.toISOString()}
-      >
-        {timeFormat(post.data.date)}
-      </time>
-    </div>
+    <PostMeta post={post} timeClass="ml-auto" />
     <p class="text-on-surface-variant">{post.data.description}</p>
   </article>
 </a>

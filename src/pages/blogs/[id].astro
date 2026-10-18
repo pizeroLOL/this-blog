@@ -1,17 +1,17 @@
 ---
 import {
-  getCollection,
   render,
   type InferEntrySchema,
   type RenderedContent,
 } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Icon from "../../components/Icon.astro";
+import PostMeta from "../../components/PostMeta.astro";
 import WebInfo from "../../components/WebInfo.astro";
-import timeFormat from "../../scripts/timeFormat";
-// 1. Generate a new path for every collection entry
+import getVisiblePosts from "../../scripts/posts";
+// 1. Generate a new path for every visible collection entry
 export async function getStaticPaths() {
-  const posts = await getCollection("blogs");
+  const posts = await getVisiblePosts();
   return posts.map((post) => ({
     params: { id: post.id },
     props: { post },
@@ -51,17 +51,7 @@ const { Content } = await render(post);
   <main class="mx-auto max-w-5xl px-4 pb-24">
     <article class="md mx-auto max-w-184">
       <header class="m3-rise mt-6 mb-10 flex flex-col gap-4">
-        <div class="flex flex-wrap items-center gap-2">
-          {post.data.tags.map((tag) => (
-            <span class="m3-chip m3-chip-tonal">{tag}</span>
-          ))}
-          <time
-            class="text-label text-on-surface-variant px-1 tabular-nums"
-            datetime={post.data.date.toISOString()}
-          >
-            {timeFormat(post.data.date)}
-          </time>
-        </div>
+        <PostMeta post={post} timeClass="px-1" />
         <h1 class="text-headline text-wrap sm:text-display">
           {post.data.title}
         </h1>
@@ -98,7 +88,13 @@ const { Content } = await render(post);
     window.addEventListener("scroll", updateFab, { passive: true });
     updateFab();
     fab?.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+      window.scrollTo({
+        top: 0,
+        behavior: reduceMotion ? "auto" : "smooth",
+      });
     });
   </script>
 </Base>

@@ -37,6 +37,10 @@ const MAX_COLORS = 128;
 const RNG_SEED = 1;
 const SAMPLE_WIDTH = 256;
 
+/* favicon / apple-touch-icon 共用的 `>_<` 字形 */
+const GLYPH_PATH =
+  "M166.568 395.888L338.824 502.288V540.816L168.808 647.216L148.424 619.44L306.568 521.776L148.424 424.336L166.568 395.888ZM400.025 743.312V710.384H624.025V743.312H400.025ZM857.93 395.888L876.074 424.784L717.93 521.776L876.074 619.664L855.914 647.216L685.674 540.816V502.288L857.93 395.888Z";
+
 const ROLES = [
   "primary",
   "onPrimary",
@@ -116,7 +120,9 @@ function collect(seed, isDark) {
   const out = {};
   for (const role of ROLES) {
     const dyn = MaterialDynamicColors[role];
-    if (!dyn) continue;
+    if (!dyn) {
+      throw new Error(`MaterialDynamicColors 缺少颜色角色：${role}`);
+    }
     out[kebab(role)] = hexFromArgb(dyn.getArgb(scheme));
   }
   return out;
@@ -126,6 +132,73 @@ const block = (obj, indent = "  ") =>
   Object.entries(obj)
     .map(([k, v]) => `${indent}--md-${k}: ${v};`)
     .join("\n");
+
+/**
+ * 浏览器 favicon：保留原来的圆角条 + 描边环 + `>_<` 字形，
+ * 只把浅色 / 深色两套 primary / on-primary 换成当前生成的方案。
+ */
+const faviconSvg = (
+  light,
+  dark
+) => `<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    /* 跟随系统的浅色 / 深色主题，配色取自 theme.css 的 primary / on-primary */
+    :root {
+      --favicon-bg: ${light.primary};
+      --favicon-fg: ${light["on-primary"]};
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --favicon-bg: ${dark.primary};
+        --favicon-fg: ${dark["on-primary"]};
+      }
+    }
+    .bg { fill: var(--favicon-bg); }
+    .ring { fill: none; stroke: var(--favicon-fg); stroke-opacity: 0.25; stroke-width: 8; }
+    .glyph { fill: var(--favicon-fg); }
+  </style>
+  <rect y="170" width="1024" height="683" rx="240" class="bg" />
+  <rect x="4" y="174" width="1016" height="675" rx="236" class="ring" />
+  <path
+    d="${GLYPH_PATH}"
+    class="glyph"
+  />
+</svg>
+`;
+
+/**
+ * iOS 会自己裁圆角，所以这里直接铺满 primary 底色，
+ * 再把字形放大 1.2 倍居中（与旧图标构图一致）。
+ */
+const appleTouchSvg = (
+  primary,
+  onPrimary
+) => `<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1024" height="1024" fill="${primary}" />
+  <path
+    d="${GLYPH_PATH}"
+    fill="${onPrimary}"
+    transform="translate(512 512) scale(1.2) translate(-512 -569)"
+  />
+</svg>
+`;
+
+/**
+ * 32px PNG 回退：librsvg 不解析 SVG 里的 CSS 变量，
+ * 所以栅格化时把同一套图形写成直接的颜色属性。
+ */
+const faviconRasterSvg = (
+  primary,
+  onPrimary
+) => `<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <rect y="170" width="1024" height="683" rx="240" fill="${primary}" />
+  <rect x="4" y="174" width="1016" height="675" rx="236" fill="none" stroke="${onPrimary}" stroke-opacity="0.25" stroke-width="8" />
+  <path
+    d="${GLYPH_PATH}"
+    fill="${onPrimary}"
+  />
+</svg>
+`;
 
 const seedArgb = await extractSeed();
 const seed = Hct.fromInt(seedArgb);
@@ -163,6 +236,21 @@ export const darkSurface = "${dark.surface}";
 `
 );
 
+/* favicon：SVG 跟随系统明暗；PNG 回退固定用浅色方案 */
+const favicon = faviconSvg(light, dark);
+writeFileSync(resolve(ROOT, "src/favicon.svg"), favicon);
+
+await Promise.all([
+  sharp(Buffer.from(faviconRasterSvg(light.primary, light["on-primary"])))
+    .resize(32, 32)
+    .png({ compressionLevel: 9 })
+    .toFile(resolve(ROOT, "src/assets/favicon-32.png")),
+  sharp(Buffer.from(appleTouchSvg(light.primary, light["on-primary"])))
+    .resize(180, 180)
+    .png({ compressionLevel: 9 })
+    .toFile(resolve(ROOT, "src/assets/apple-touch-icon.png")),
+]);
+
 console.log("seed      ", hexFromArgb(seedArgb));
 console.log(
   "light     ",
@@ -183,12 +271,5 @@ console.log(
   dark.surface
 );
 console.log(
-  "favicon   需要同步：浅色 =",
-  light.primary,
-  "/",
-  light["on-primary"],
-  "，深色 =",
-  dark.primary,
-  "/",
-  dark["on-primary"]
+  "favicon    已写入 src/favicon.svg / favicon-32.png / apple-touch-icon.png"
 );

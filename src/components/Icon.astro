@@ -29,6 +29,9 @@ const icons: Record<IconName, IconDef> = {
 };
 
 const icon = icons[name];
+const isFill = icon.kind === "fill";
+const paths = isFill ? [icon.path] : icon.paths;
+const hasDot = !isFill && icon.dot;
 ---
 
 <svg
@@ -36,20 +39,16 @@ const icon = icons[name];
   width={size}
   height={size}
   viewBox="0 0 24 24"
-  fill={icon.kind === "fill" ? "currentColor" : "none"}
-  stroke={icon.kind === "stroke" ? "currentColor" : undefined}
-  stroke-width={icon.kind === "stroke" ? 2 : undefined}
+  fill={isFill ? "currentColor" : "none"}
+  stroke={isFill ? undefined : "currentColor"}
+  stroke-width={isFill ? undefined : 2}
   stroke-linecap="round"
   stroke-linejoin="round"
   class={className}
   aria-hidden="true"
 >
-  {icon.kind === "stroke" ? (
-    icon.paths.map((d) => <path d={d} />)
-  ) : (
-    <path d={icon.path} />
-  )}
-  {icon.kind === "stroke" && icon.dot && (
-    <circle cx="5" cy="19" r="1.6" fill="currentColor" />
-  )}
+  {paths.map((d) => (
+    <path d={d} />
+  ))}
+  {hasDot && <circle cx="5" cy="19" r="1.6" fill="currentColor" />}
 </svg>

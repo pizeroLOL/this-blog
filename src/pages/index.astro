@@ -98,7 +98,7 @@ const posts = await getVisiblePosts();
       </h2>
       <div class="flex flex-col gap-3">
         {posts.map((post, i) => (
-          <PostBlock post={post} index={i} />
+          <PostBlock post={post} staggerIndex={i} />
         ))}
       </div>
     </section>

@@ -1,0 +1,28 @@
+---
+import timeFormat from "../scripts/timeFormat";
+
+interface Props {
+  post: {
+    data: {
+      tags: string[];
+      date: Date;
+    };
+  };
+  /** 时间戳额外类：卡片里靠右，文章页保持与标签同排 */
+  timeClass?: string;
+}
+
+const { post, timeClass } = Astro.props;
+---
+
+<div class="flex flex-wrap items-center gap-2">
+  {post.data.tags.map((tag) => (
+    <span class="m3-chip m3-chip-tonal">{tag}</span>
+  ))}
+  <time
+    class:list={["text-label text-on-surface-variant tabular-nums", timeClass]}
+    datetime={post.data.date.toISOString()}
+  >
+    {timeFormat(post.data.date)}
+  </time>
+</div>
