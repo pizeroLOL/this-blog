@@ -7,18 +7,21 @@ const schema = z.object({
   timestamp: z.number(),
 });
 
+/* 状态色取自 M3E 配色令牌（theme.css）：
+ *   在线 = tertiary（蓝）· 繁忙 = primary（琥珀）· 离线 = outline（暖灰）
+ */
 const statusMap = {
   offline: {
     text: "离线",
-    color: "bg-gray-500",
+    color: "bg-outline",
   },
   online: {
     text: "在线",
-    color: "bg-green-500",
+    color: "bg-tertiary",
   },
   busy: {
     text: "繁忙",
-    color: "bg-orange-500",
+    color: "bg-primary",
   },
 } as const;
 
@@ -47,7 +50,7 @@ const getStatus = () =>
 const status = (props: StatusType) => {
   const dot = ["size-2 rounded-full", props.color].join(" ");
   return (
-    <div class="m3-chip m3-chip-hero">
+    <div class="m3-chip m3-chip-outline">
       <span class={dot}></span>
       <span>{props.text}</span>
       {props.text == "离线" && props.lastOnline && (
