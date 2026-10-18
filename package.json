@@ -8,7 +8,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "fmt": "prettier --write .",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "theme": "node --import ./tools/esm-extensionless.mjs tools/gen-theme.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
@@ -25,10 +26,12 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@astrojs/markdown-remark": "^7.3.3",
     "@eslint/css": "^1.4.0",
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^2.0.1",
     "@eslint/markdown": "^8.0.3",
+    "@material/material-color-utilities": "^0.4.0",
     "@typescript-eslint/parser": "^8.65.0",
     "eslint": "^10.8.0",
     "eslint-config-prettier": "^10.1.8",

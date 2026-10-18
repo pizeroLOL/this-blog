@@ -1,86 +1,87 @@
 /* ===========================================================================
- * Material 3 Expressive 配色令牌 —— 自动生成，请勿手改
+ * Material 3 Expressive 配色令牌 —— 自动生成，请勿手改（pnpm theme）
  *
- * 取色：壁纸 luoxi.png → Celebi 量化(128) → Score 评分(Material You 默认)
- * 种子：  #f5ac58  (HCT 67° / 42.6 / 76)
- * 方案：  SchemeExpressive，specVersion 2025（M3 Expressive 色彩规范）
+ * 取色：src/assets/luoxi.jpg → Celebi 量化(128) → Score 评分（Material You 默认）
+ * 量化器的随机初始化固定为 seed 1，结果可复现
+ * 种子：#f8b456（HCT 72° / 43.7 / 78）
+ * 方案：SchemeExpressive，specVersion 2025（M3 Expressive 色彩规范）
  * 深浅模式：跟随系统 prefers-color-scheme，无运行时主题切换
  * =========================================================================== */
 
 :root {
-  --md-primary: #895200;
+  --md-primary: #855500;
   --md-on-primary: #fff7f3;
-  --md-primary-container: #ffb155;
-  --md-on-primary-container: #593400;
-  --md-secondary: #515f7e;
-  --md-on-secondary: #f9f8ff;
-  --md-secondary-container: #d8e2ff;
-  --md-on-secondary-container: #445170;
-  --md-tertiary: #285fa7;
-  --md-on-tertiary: #f8f8ff;
-  --md-tertiary-container: #91baff;
-  --md-on-tertiary-container: #00366e;
+  --md-primary-container: #fcb249;
+  --md-on-primary-container: #563500;
+  --md-secondary: #555e7e;
+  --md-on-secondary: #faf8ff;
+  --md-secondary-container: #dbe1ff;
+  --md-on-secondary-container: #475170;
+  --md-tertiary: #355da9;
+  --md-on-tertiary: #f9f8ff;
+  --md-tertiary-container: #99b8ff;
+  --md-on-tertiary-container: #003378;
   --md-error: #aa371c;
   --md-on-error: #fff7f6;
   --md-error-container: #fa7150;
   --md-on-error-container: #671200;
-  --md-surface: #fff8f3;
-  --md-on-surface: #462e00;
-  --md-surface-variant: #ffddaf;
-  --md-on-surface-variant: #7a5924;
-  --md-surface-dim: #ffd393;
-  --md-surface-bright: #fff8f3;
+  --md-surface: #fff8f4;
+  --md-on-surface: #492c00;
+  --md-surface-variant: #ffddb6;
+  --md-on-surface-variant: #7c5826;
+  --md-surface-dim: #ffd29c;
+  --md-surface-bright: #fff8f4;
   --md-surface-container-lowest: #ffffff;
-  --md-surface-container-low: #fff1e3;
-  --md-surface-container: #ffebd2;
-  --md-surface-container-high: #ffe4c1;
-  --md-surface-container-highest: #ffddaf;
-  --md-outline: #98753d;
-  --md-outline-variant: #d4ab6e;
-  --md-inverse-surface: #170c00;
-  --md-inverse-on-surface: #b39975;
-  --md-inverse-primary: #fbaa49;
+  --md-surface-container-low: #fff1e5;
+  --md-surface-container: #ffebd5;
+  --md-surface-container-high: #ffe4c6;
+  --md-surface-container-highest: #ffddb6;
+  --md-outline: #9b733e;
+  --md-outline-variant: #d8aa70;
+  --md-inverse-surface: #180c00;
+  --md-inverse-on-surface: #b59876;
+  --md-inverse-primary: #f9b046;
   --md-shadow: #000000;
   --md-scrim: #000000;
-  --md-surface-tint: #895200;
+  --md-surface-tint: #855500;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-  --md-primary: #ffce9d;
-  --md-on-primary: #6d4101;
-  --md-primary-container: #febd75;
-  --md-on-primary-container: #613900;
-  --md-secondary: #bfc6dc;
-  --md-on-secondary: #394052;
-  --md-secondary-container: #1e2636;
-  --md-on-secondary-container: #9ca4b9;
-  --md-tertiary: #a9c7ff;
-  --md-on-tertiary: #003f7f;
-  --md-tertiary-container: #91baff;
-  --md-on-tertiary-container: #00366e;
+  --md-primary: #ffcf93;
+  --md-on-primary: #694300;
+  --md-primary-container: #f9bf72;
+  --md-on-primary-container: #5d3b00;
+  --md-secondary: #c1c5dd;
+  --md-on-secondary: #3a4052;
+  --md-secondary-container: #202537;
+  --md-on-secondary-container: #9ea3b9;
+  --md-tertiary: #afc6ff;
+  --md-on-tertiary: #073d88;
+  --md-tertiary-container: #99b8ff;
+  --md-on-tertiary-container: #003378;
   --md-error: #fe7453;
   --md-on-error: #450900;
   --md-error-container: #881f05;
   --md-on-error-container: #ff9b82;
-  --md-surface: #160c00;
-  --md-on-surface: #ffe1b9;
-  --md-surface-variant: #352201;
-  --md-on-surface-variant: #c6a678;
-  --md-surface-dim: #160c00;
-  --md-surface-bright: #3d2801;
+  --md-surface: #170c01;
+  --md-on-surface: #ffe1be;
+  --md-surface-variant: #372102;
+  --md-on-surface-variant: #c9a579;
+  --md-surface-dim: #170c01;
+  --md-surface-bright: #3f2702;
   --md-surface-container-lowest: #000000;
-  --md-surface-container-low: #1d1101;
-  --md-surface-container: #251701;
-  --md-surface-container-high: #2d1c01;
-  --md-surface-container-highest: #352201;
-  --md-outline: #8d7147;
-  --md-outline-variant: #5b441e;
-  --md-inverse-surface: #fff8f3;
-  --md-inverse-on-surface: #63523b;
-  --md-inverse-primary: #855416;
+  --md-surface-container-low: #1e1001;
+  --md-surface-container: #261601;
+  --md-surface-container-high: #2e1c02;
+  --md-surface-container-highest: #372102;
+  --md-outline: #8f7048;
+  --md-outline-variant: #5d431f;
+  --md-inverse-surface: #fff8f4;
+  --md-inverse-on-surface: #64523c;
+  --md-inverse-primary: #825612;
   --md-shadow: #000000;
   --md-scrim: #000000;
-  --md-surface-tint: #ffce9d;
+  --md-surface-tint: #ffcf93;
   }
 }

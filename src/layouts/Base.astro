@@ -2,6 +2,7 @@
 import Icon from "../favicon.svg";
 import faviconPng from "../assets/favicon-32.png";
 import appleTouchIcon from "../assets/apple-touch-icon.png";
+import { darkSurface, lightSurface } from "../styles/theme-meta";
 import "../styles/global.css";
 interface Props {
   title?: string;
@@ -27,12 +28,12 @@ const props = Astro.props;
     <meta
       name="theme-color"
       media="(prefers-color-scheme: light)"
-      content="#fff8f3"
+      content={lightSurface}
     />
     <meta
       name="theme-color"
       media="(prefers-color-scheme: dark)"
-      content="#160c00"
+      content={darkSurface}
     />
     {props.title && <title>pizero/{props.title}</title>}
     {props.noindex && <meta name="robots" content="noindex" />}
