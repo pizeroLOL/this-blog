@@ -118,6 +118,8 @@
   html {
     background-color: var(--md-surface);
     scroll-behavior: smooth;
+    /* 滚动条跟随主题，避免在壁纸页右侧像一条“白边” */
+    scrollbar-color: var(--md-outline-variant) var(--md-surface);
   }
 
   body {
@@ -193,6 +195,10 @@
     inset: -2rem;
     width: calc(100% + 4rem);
     height: calc(100% + 4rem);
+    /* Tailwind preflight 的 img { max-width: 100% } 会把上面的 width 截断，
+       导致右侧露出 2rem 底色 */
+    max-width: none;
+    max-height: none;
     object-fit: cover;
     object-position: 45% 30%;
     filter: blur(var(--hero-blur));
