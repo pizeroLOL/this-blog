@@ -7,7 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "oxlint",
+    "lint": "oxlint && eslint .",
     "theme": "node --import ./tools/esm-extensionless.mjs tools/gen-theme.mjs",
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check"
@@ -30,8 +30,13 @@
     "@astrojs/compiler-rs": "^0.5.2",
     "@astrojs/markdown-remark": "^7.3.3",
     "@material/material-color-utilities": "^0.4.0",
+    "eslint": "^10.13.0",
+    "eslint-plugin-astro": "^3.2.1",
+    "eslint-plugin-better-tailwindcss": "^4.9.1",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-oxlint": "^1.88.0",
     "oxfmt": "^0.73.0",
     "oxlint": "^1.88.0",
-    "oxlint-tailwindcss": "^1.16.0"
+    "typescript-eslint": "^8.71.2"
   }
 }
